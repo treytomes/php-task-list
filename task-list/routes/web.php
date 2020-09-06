@@ -11,6 +11,34 @@
 |
 */
 
-Route::get('/', function () {
+use App\Task;
+use Illuminate\Http\Request;
+
+/**
+ * Keep a copy of the default welcome page for now.
+ */
+Route::get('/welcome', function () {
     return view('welcome');
+});
+
+
+/**
+ * Show Task Dashboard
+ */
+Route::get('/', function () {
+    return view('tasks');
+});
+
+/**
+ * Add New Task
+ */
+Route::get('/task', function (Request $request) {
+    //
+});
+
+/**
+ * Delete Task
+ */
+Route::delete('/task/{task}', function (Task $task) {
+    //
 });
