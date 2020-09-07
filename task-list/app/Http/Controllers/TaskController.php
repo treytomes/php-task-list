@@ -10,12 +10,21 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     /**
+     * The task repository instance.
+     * 
+     * @var TaskRepository
+     */
+    protected $tasks;
+
+    /**
      * Create a new controller instance.
      * 
-     * @return void
+     * @param   TaskRepository  $tasks
+     * @return  void
      */
-    public function __construct() {
+    public function __construct(TaskRepository $tasks) {
         $this->middleware('auth');
+        $this->tasks = $tasks;
     }
 
     /**
@@ -25,10 +34,8 @@ class TaskController extends Controller
      * @return  Response
      */
     function index(Request $request) {
-        $tasks = $request->user()->tasks()->orderBy('created_at', 'asc')->get();
-
         return view('tasks.index', [
-            'tasks' => $tasks
+            'tasks' => $this->tasks->forUser($request->user())
         ]);
     }
 
