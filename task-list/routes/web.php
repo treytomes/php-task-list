@@ -62,3 +62,8 @@ Route::delete('/task/{task}', function (Task $task) {
 
     return redirect('/');
 });
+
+// Is this the same as Route::auth()?
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
