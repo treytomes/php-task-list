@@ -6,7 +6,6 @@ use App\Task;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -25,30 +24,27 @@ class TaskController extends Controller
     function index() {
         $tasks = Task::orderBy('created_at', 'asc')->get();
 
-        return view('tasks', [
+        return view('tasks.index', [
             'tasks' => $tasks
         ]);
     }
 
     /**
-     * Add New Task
+     * Create a new task.
+     * 
+     * @param   Request $request
+     * @return  Response
      */
     function store(Request $request) {
-        $validator = Validator::make($request->all(), [
+        $this->validate($request, [
             'name' => 'required|max:255',
         ]);
+
+        $request->user()->tasks()->create([
+            'name' => $request->name,
+        ]);
     
-        if ($validator->fails()) {
-            return redirect('/')
-                ->withInput()
-                ->withErrors($validator);
-        }
-    
-        $task = new Task;
-        $task->name = $request->name;
-        $task->save();
-    
-        return redirect('/');
+        return redirect('/tasks');
     }
 
     /**
@@ -57,6 +53,6 @@ class TaskController extends Controller
     function destroy(Task $task) {
         $task->delete();
 
-        return redirect('/');
+        return redirect('/tasks');
     }
 }
