@@ -19,10 +19,13 @@ class TaskController extends Controller
     }
 
     /**
-     * Show Task Dashboard
+     * Display a list of all of the user's tasks.
+     * 
+     * @param   Request $request
+     * @return  Response
      */
-    function index() {
-        $tasks = Task::orderBy('created_at', 'asc')->get();
+    function index(Request $request) {
+        $tasks = $request->user()->tasks()->orderBy('created_at', 'asc')->get();
 
         return view('tasks.index', [
             'tasks' => $tasks
