@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
  */
 Route::get('/welcome', function () {
     return view('welcome');
-});
+})->middleware('guest');
 
 Route::get('/tasks', 'TaskController@index');
 Route::post('/task', 'TaskController@store');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -65,8 +66,9 @@ class TaskController extends Controller
      * @return  Response
      */
     function destroy(Request $request, Task $task) {
+        // TODO: This doesn't work right.
         $this->authorize('destroy', $task);
-        
+
         $task->delete();
 
         return redirect('/tasks');
