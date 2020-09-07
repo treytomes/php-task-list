@@ -66,7 +66,6 @@ class TaskController extends Controller
      * @return  Response
      */
     function destroy(Request $request, Task $task) {
-        // TODO: This doesn't work right.
         $this->authorize('destroy', $task);
 
         $task->delete();
